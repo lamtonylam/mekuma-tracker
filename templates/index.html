@@ -13,21 +13,52 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"
     ></script>
-
 </head>
 <body>
+    <div class="text-center">
+        <h4>Mekuma (Meksikolainen uunimakkara) tracker</h4>
 
-Tänään on : {{ date }}.
+        Tänään on: {{ date }}.
 
-{% if onkoonko_makkaraa %}
-<h1>Tänään on Mekuma (meksikolainen uunimakkara) Chemicumissa</h1>
-{% else %}
-<h1>Tänään ei ole Mekuma (meksikolainen uunimakkara) Chemicumissa</h1>
-{% endif %}
+        <ul class="list-group">
+            <li class="list-group-item">
+                <h1>
+                    Mekuma Chemicumissa: {% if onko_makkaraa_chemicum %} ✅ {%
+                    else %} ❌ {% endif %}</h1
+                >
+            </li>
+            <li class="list-group-item">
+                <h1>
+                    Mekuma Exactumissa: {% if onko_makkaraa_exactum %} ✅ {%
+                    else %} ❌ {% endif %}</h1
+                >
+            </li>
+        </ul>
+        <br />
+        <b>Chemicumissa on tänään seuraavat ruuat:</b>
+        {% for message in chemicum_menu %}
+        <hr />
+        {{ message }} {% endfor %}
 
-{% for message in message %}
-    <hr>
-    {{ message }}
-{% endfor %}
+        <hr />
 
+        <b>Exactumissa on tänään seuraavat ruuat:</b>
+        {% for message in exactum_menu %}
+        <hr />
+        {{ message }} {% endfor %}
+        <hr />
+
+        <div class="btn-group-vertical">
+            <a
+                class="btn btn-primary btn"
+                href="https://www.cs.helsinki.fi/u/tonylam/"
+                >Tehnyt: Tony Lam</a
+            >
+            <a
+                class="btn btn-outline-primary btn"
+                href="https://unicafe.fi/"
+                >API: Unicafe</a
+            >
+        </div>
+    </div>
 </body>
