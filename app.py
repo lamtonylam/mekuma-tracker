@@ -31,10 +31,12 @@ def index():
                     data = menu["data"]
                     for item in data:
                         chemicum_menu.append(item["name"])
-                    if "Meksikolainen uunimakkara" in menu:
+                    if "Meksikolainen uunimakkara" in chemicum_menu:
                         onko_makkaraa_chemicum = True
             break
-        
+
+    print(chemicum_menu)
+    
     onko_makkaraa_exactum = False
     exactum_menu = []
     for object in response.json():
@@ -44,9 +46,11 @@ def index():
                     data = menu["data"]
                     for item in data:
                         exactum_menu.append(item["name"])
-                    if "Meksikolainen uunimakkara" in menu:
+                    if "Meksikolainen uunimakkara" in exactum_menu:
                         onko_makkaraa_exactum = True
             break
+    
+    print(exactum_menu)
 
     return render_template(
         "index.html",
