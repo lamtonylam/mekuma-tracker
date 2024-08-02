@@ -20,37 +20,37 @@ date = datetime.now().strftime("%d.%m")
 app = Flask(__name__)
 
 
-@app.route("/")
-def index():
-    onko_makkaraa_chemicum = False
-    chemicum_menu = []
+def get_todays_menu(restaurant_name):
+    restaurant_menu = []
     for object in response.json():
-        if object["title"] == "Chemicum":
+        if object["title"] == restaurant_name:
             for menu in object["menuData"]["menus"]:
                 if date in menu["date"]:
                     data = menu["data"]
                     for item in data:
-                        chemicum_menu.append(item["name"])
-                    if "Meksikolainen uunimakkara" in chemicum_menu:
-                        onko_makkaraa_chemicum = True
+                        restaurant_menu.append(item["name"])
             break
+
+    return restaurant_menu
+
+
+@app.route("/")
+def index():
+    # Chemicum
+    onko_makkaraa_chemicum = False
+    chemicum_menu = get_todays_menu("Chemicum")
+    if "Meksikolainen uunimakkara" in chemicum_menu:
+        onko_makkaraa_chemicum = True
 
     chemicum_suljettu = False
     if len(chemicum_menu) == 0:
         chemicum_suljettu = True
 
+    # Exactum
     onko_makkaraa_exactum = False
-    exactum_menu = []
-    for object in response.json():
-        if object["title"] == "Exactum":
-            for menu in object["menuData"]["menus"]:
-                if date in menu["date"]:
-                    data = menu["data"]
-                    for item in data:
-                        exactum_menu.append(item["name"])
-                    if "Meksikolainen uunimakkara" in exactum_menu:
-                        onko_makkaraa_exactum = True
-            break
+    exactum_menu = get_todays_menu("Exactum")
+    if "Meksikolainen uunimakkara" in exactum_menu:
+        onko_makkaraa_exactum = True
 
     exactum_suljettu = False
     if len(exactum_menu) == 0:
