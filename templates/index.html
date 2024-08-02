@@ -24,29 +24,64 @@
             <li class="list-group-item">
                 <h1>
                     Mekuma Chemicumissa: {% if onko_makkaraa_chemicum %} ✅ {%
-                    else %} ❌ {% endif %}</h1
-                >
+                    else %} ❌ {% endif %}
+                </h1>
             </li>
             <li class="list-group-item">
                 <h1>
                     Mekuma Exactumissa: {% if onko_makkaraa_exactum %} ✅ {%
-                    else %} ❌ {% endif %}</h1
-                >
+                    else %} ❌ {% endif %}
+                </h1>
             </li>
         </ul>
         <br />
         <b>Chemicumissa on tänään seuraavat ruuat:</b>
-        {% for message in chemicum_menu %}
-        <hr />
-        {{ message }} {% endfor %}
+        <br />
+        <button
+            class="btn btn-primary"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseChemicum"
+            aria-expanded="false"
+            aria-controls="collapseChemicum"
+        >
+            Klikkaa tästä
+        </button>
+        <div class="collapse" id="collapseChemicum">
+            {% for message in chemicum_menu %}
+            <hr />
+            {{ message }} {% endfor %} {% if chemcim_suljettu %}
+            <hr />
+            Chemicumista ei ole dataa, se on todennäköisesti tänään suljettu
+            <hr />
+            {% endif %}
+        </div>
 
+        {% if not exactum_suljettu %}
         <hr />
-
         <b>Exactumissa on tänään seuraavat ruuat:</b>
-        {% for message in exactum_menu %}
+        <br />
+        <button
+            class="btn btn-primary"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseExactum"
+            aria-expanded="false"
+            aria-controls="collapseExactum"
+        >
+            Klikkaa tästä
+        </button>
+        <div class="collapse" id="collapseExactum">
+            {% for message in exactum_menu %}
+            <hr />
+            {{ message }} {% endfor %}
+            <hr />
+        </div>
+        {% endif %} {% if exactum_suljettu %}
         <hr />
-        {{ message }} {% endfor %}
+        <b>Exactumista ei ole dataa, se on todennäköisesti tänään suljettu</b>
         <hr />
+        {% endif %}
 
         <div class="btn-group-vertical">
             <a
@@ -54,9 +89,7 @@
                 href="https://www.cs.helsinki.fi/u/tonylam/"
                 >Tehnyt: Tony Lam</a
             >
-            <a
-                class="btn btn-outline-primary btn"
-                href="https://unicafe.fi/"
+            <a class="btn btn-outline-primary btn" href="https://unicafe.fi/"
                 >API: Unicafe</a
             >
         </div>

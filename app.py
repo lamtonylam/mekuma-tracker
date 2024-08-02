@@ -35,8 +35,10 @@ def index():
                         onko_makkaraa_chemicum = True
             break
 
-    print(chemicum_menu)
-    
+    chemicum_suljettu = False
+    if len(chemicum_menu) == 0:
+        chemicum_suljettu = True
+
     onko_makkaraa_exactum = False
     exactum_menu = []
     for object in response.json():
@@ -49,13 +51,17 @@ def index():
                     if "Meksikolainen uunimakkara" in exactum_menu:
                         onko_makkaraa_exactum = True
             break
-    
-    print(exactum_menu)
+
+    exactum_suljettu = False
+    if len(exactum_menu) == 0:
+        exactum_suljettu = True
 
     return render_template(
         "index.html",
         chemicum_menu=chemicum_menu,
+        chemicum_suljettu=chemicum_suljettu,
         exactum_menu=exactum_menu,
+        exactum_suljettu=exactum_suljettu,
         onko_makkaraa_chemicum=onko_makkaraa_chemicum,
         onko_makkaraa_exactum=onko_makkaraa_exactum,
         date=date,
