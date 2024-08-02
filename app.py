@@ -19,6 +19,7 @@ date = datetime.now().strftime("%d.%m")
 
 app = Flask(__name__)
 
+
 def furtherst_date_data():
     dates = []
     for object in response.json():
@@ -27,28 +28,33 @@ def furtherst_date_data():
                 dates.append(menu["date"])
     return dates[-1][3:]
 
+
 def check_if_sausage_is_in_week(restaurant_name):
     # get the whole week
     menu_original = {}
     for object in response.json():
         if object["title"] == restaurant_name:
             for menu in object["menuData"]["menus"]:
-                menu_original[menu["date"][3:]] = []
+                menu_original[menu["date"]] = []
                 data = menu["data"]
                 for item in data:
-                    menu_original[menu["date"][3:]].append(item["name"])
+                    menu_original[menu["date"]].append(item["name"])
 
     # strip the menu
     menu_stripped_from_pastdates = {}
     for date_menu in menu_original:
         present = datetime.now().strftime("%d.%m.")
+        # keep the date in the original format
+        date_menu_original = date_menu
+        # make date in format without weekday
+        date_menu = date_menu[3:]
         if datetime.strptime(date_menu, "%d.%m.") < datetime.strptime(
             present, "%d.%m."
         ):
             pass
         else:
-            menu_stripped_from_pastdates[date_menu] = [
-                item.lower() for item in menu_original[date_menu]
+            menu_stripped_from_pastdates[date_menu_original] = [
+                item.lower() for item in menu_original[date_menu_original]
             ]
 
     # dates that have sausage
