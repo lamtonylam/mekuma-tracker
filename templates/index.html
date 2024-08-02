@@ -16,25 +16,42 @@
 </head>
 <body>
     <div class="text-center">
-        <h4>Mekuma (Meksikolainen uunimakkara) tracker</h4>
+        <br />
+        {% if global_sausage_search|length == 0 %}
+        <h1>Meksikolaista uunimakkaraa ei löytynyt Unicafen ravintoloista</h1>
+        {% else %}
+        <h3>
+            Meksikolaista uunimakkaraa löytyy näistä Unicafen ravintoloista:
+        </h3>
+        {% for location, dates in global_sausage_search.items() %}
+        <h3>
+            <hr />
+            <b>{{ location }}:</b> {% for date in dates %} {{ date }} {% endfor
+            %}
+            <hr />
+        </h3>
+        {% endfor %} {% endif %}
+        <p>Tänään on: {{ date }}.</p>
+        <p>Data haettu {{furtherst_date_data}} asti</p>
 
-        Tänään on: {{ date }}.
-
-        <ul class="list-group">
-            <li class="list-group-item">
-                <h1>
+        <!--
+            <ul class="list-group">
+                <li class="list-group-item">
+                <h2>
                     Mekuma Chemicumissa: {% if onko_makkaraa_chemicum %} ✅ {%
                     else %} ❌ {% endif %}
-                </h1>
-            </li>
-            <li class="list-group-item">
-                <h1>
+                </h2>
+                </li>
+                <li class="list-group-item">
+                <h2>
                     Mekuma Exactumissa: {% if onko_makkaraa_exactum %} ✅ {%
                     else %} ❌ {% endif %}
-                </h1>
-            </li>
-        </ul>
-        <br />
+                </h2>
+                </li>
+            </ul>
+        -->
+        <!-- <br /> ... -->
+        <hr />
         <b>Chemicumissa on tänään seuraavat ruuat:</b>
         <br />
         <button
@@ -93,5 +110,10 @@
                 >API: Unicafe</a
             >
         </div>
+
+        <p>
+            Tieto on suuntaa antavaa, varmista Unicafen sivuilta meksikolaisen
+            uunimakkaran saatavuus.
+        </p>
     </div>
 </body>

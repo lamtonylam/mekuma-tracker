@@ -19,6 +19,46 @@ date = datetime.now().strftime("%d.%m")
 
 app = Flask(__name__)
 
+def furtherst_date_data():
+    dates = []
+    for object in response.json():
+        if object["title"] == "Chemicum":
+            for menu in object["menuData"]["menus"]:
+                dates.append(menu["date"])
+    return dates[-1][3:]
+
+def check_if_sausage_is_in_week(restaurant_name):
+    # get the whole week
+    menu_original = {}
+    for object in response.json():
+        if object["title"] == restaurant_name:
+            for menu in object["menuData"]["menus"]:
+                menu_original[menu["date"][3:]] = []
+                data = menu["data"]
+                for item in data:
+                    menu_original[menu["date"][3:]].append(item["name"])
+
+    # strip the menu
+    menu_stripped_from_pastdates = {}
+    for date_menu in menu_original:
+        present = datetime.now().strftime("%d.%m.")
+        if datetime.strptime(date_menu, "%d.%m.") < datetime.strptime(
+            present, "%d.%m."
+        ):
+            pass
+        else:
+            menu_stripped_from_pastdates[date_menu] = [
+                item.lower() for item in menu_original[date_menu]
+            ]
+
+    # dates that have sausage
+    dates_that_have_sausage = []
+    for day in menu_stripped_from_pastdates:
+        if "meksikolainen uunimakkara" in menu_stripped_from_pastdates[day]:
+            dates_that_have_sausage.append(day)
+
+    return dates_that_have_sausage
+
 
 def get_todays_menu(restaurant_name):
     restaurant_menu = []
@@ -34,8 +74,34 @@ def get_todays_menu(restaurant_name):
     return restaurant_menu
 
 
+def unicafe_global_sausagesearch():
+    # only restaurants that have warm food
+    restaurants = [
+        "Biokeskus 3",
+        "Chemicum",
+        "Exactum",
+        "Infokeskus",
+        "Infokeskus alakerta",
+        "Kaivopiha",
+        "Meilahti",
+        "Metsätalo",
+        "Olivia",
+        "Porthania",
+        "Soc&Kom",
+    ]
+
+    restaurant_sausage_dict = {}
+    for restaurant in restaurants:
+        sausage_dates = check_if_sausage_is_in_week(restaurant)
+        if sausage_dates:
+            restaurant_sausage_dict[restaurant] = sausage_dates
+
+    return restaurant_sausage_dict
+
+
 @app.route("/")
 def index():
+
     # Chemicum
     onko_makkaraa_chemicum = False
     chemicum_menu = get_todays_menu("Chemicum")
@@ -65,4 +131,6 @@ def index():
         onko_makkaraa_chemicum=onko_makkaraa_chemicum,
         onko_makkaraa_exactum=onko_makkaraa_exactum,
         date=date,
+        global_sausage_search=unicafe_global_sausagesearch(),
+        furtherst_date_data=furtherst_date_data(),
     )
