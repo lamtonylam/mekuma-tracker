@@ -13,4 +13,4 @@ packaging==24.0
 requests==2.32.2
 urllib3==2.2.2
 werkzeug==3.0.3
-zipp==3.18.1
+zipp==3.19.1
