@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import render_template
+from flask_restful import Resource, Api
 
 from datetime import datetime
 
@@ -13,11 +14,11 @@ api_url = "https://unicafe.fi/wp-json/swiss/v1/restaurants/?lang=fi"
 # response from api_url
 response = requests.get(api_url)
 
+app = Flask(__name__)
+api = Api(app)
 
 # get todays date in format 07.05
 date = datetime.now().strftime("%d.%m")
-
-app = Flask(__name__)
 
 
 def furtherst_date_data():
@@ -140,3 +141,12 @@ def index():
         global_sausage_search=unicafe_global_sausagesearch(),
         furtherst_date_data=furtherst_date_data(),
     )
+
+
+# api
+class UnicafeGlobalSausageSearch(Resource):
+    def get(self):
+        return unicafe_global_sausagesearch()
+
+
+api.add_resource(UnicafeGlobalSausageSearch, "/api")
