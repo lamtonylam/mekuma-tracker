@@ -59,7 +59,10 @@
             </ul>
         -->
         <!-- <br /> ... -->
+        {% if not chemcim_suljettu %}
+
         <hr />
+
         <b>Chemicumissa on tänään seuraavat ruuat:</b>
         <br />
         <button
@@ -75,7 +78,7 @@
         <div class="collapse" id="collapseChemicum">
             {% for message in chemicum_menu %}
             <hr />
-            {{ message }} {% endfor %} {% if chemcim_suljettu %}
+            {{ message }} {% endfor %} {% endif %} {% if chemcim_suljettu %}
             <hr />
             Chemicumista ei ole dataa, se on todennäköisesti tänään suljettu
             <hr />
