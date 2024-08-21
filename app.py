@@ -120,7 +120,18 @@ def unicafe_global_sausagesearch():
         if sausage_dates:
             restaurant_sausage_dict[restaurant] = sausage_dates
 
-    return restaurant_sausage_dict
+    # make a list of restaurants and dates as tuples
+    sortedRestaurantsDate = list(restaurant_sausage_dict.items())
+
+    # func to return the pure date of sausage availability of a restaurant
+    def returndate(item):
+        return item[1][0][3:8]
+
+    # sort the items by date
+    sortedRestaurantsDate.sort(key=returndate)
+    sortedRestaurantsDate = dict(sortedRestaurantsDate)
+
+    return sortedRestaurantsDate
 
 
 @app.route("/")
