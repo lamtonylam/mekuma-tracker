@@ -82,20 +82,37 @@ def get_todays_menu(restaurant_name):
 
 
 def unicafe_global_sausagesearch():
-    # only restaurants that have warm food
-    restaurants = [
-        "Biokeskus 3",
-        "Chemicum",
-        "Exactum",
-        "Infokeskus",
+    viikkiRestaurants = [
+        "Tähkä",
         "Infokeskus alakerta",
-        "Kaivopiha",
-        "Meilahti",
-        "Metsätalo",
-        "Olivia",
-        "Porthania",
-        "Soc&Kom",
+        "Viikuna",
+        "Infokeskus",
+        "Biokeskus",
     ]
+
+    keskustaRestaurants = [
+        "Myöhä Café & Bar",
+        "Kaivopiha",
+        "Kaisa-talo",
+        "Soc&Kom",
+        "Rotunda",
+        "Porthania",
+        "Topelias",
+        "Olivia",
+        "Metsätalo",
+        "Cafe Portaali",
+    ]
+
+    kumpulaRestaurants = ["Physicum", "Exactum", "Chemicum"]
+
+    meilahtiRestaurants = ["Meilahti"]
+
+    restaurants = (
+        viikkiRestaurants
+        + keskustaRestaurants
+        + kumpulaRestaurants
+        + meilahtiRestaurants
+    )
 
     restaurant_sausage_dict = {}
     for restaurant in restaurants:
