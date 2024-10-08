@@ -176,5 +176,14 @@ class UnicafeGlobalSausageSearch(Resource):
     def get(self):
         return unicafe_global_sausagesearch()
 
+class UnicafeChemicum(Resource):
+    def get(self):
+        return get_todays_menu("Chemicum")
+
+class UnicafeExactum(Resource):
+    def get(self):
+        return get_todays_menu("Exactum")
 
 api.add_resource(UnicafeGlobalSausageSearch, "/api")
+api.add_resource(UnicafeChemicum, "/api/chemicum")
+api.add_resource(UnicafeExactum, "/api/exactum")

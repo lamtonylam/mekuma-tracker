@@ -41,24 +41,6 @@
         <hr />
         <p>Tänään on: {{ date }}.</p>
         <p>Data haettu {{furtherst_date_data}} asti</p>
-
-        <!--
-            <ul class="list-group">
-                <li class="list-group-item">
-                <h2>
-                    Mekuma Chemicumissa: {% if onko_makkaraa_chemicum %} ✅ {%
-                    else %} ❌ {% endif %}
-                </h2>
-                </li>
-                <li class="list-group-item">
-                <h2>
-                    Mekuma Exactumissa: {% if onko_makkaraa_exactum %} ✅ {%
-                    else %} ❌ {% endif %}
-                </h2>
-                </li>
-            </ul>
-        -->
-        <!-- <br /> ... -->
         {% if not chemcim_suljettu %}
 
         <hr />
@@ -111,6 +93,7 @@
         <hr />
         {% endif %}
 
+        <hr />
         <div class="btn-group-vertical">
             <a
                 class="btn btn-primary btn"
