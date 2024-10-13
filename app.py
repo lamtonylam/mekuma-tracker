@@ -81,6 +81,20 @@ def get_todays_menu(restaurant_name):
     return restaurant_menu
 
 
+def get_menu_for_date(restaurant_name, specific_date):
+    restaurant_menu = []
+    for object in response.json():
+        if object["title"].lower() == restaurant_name.lower():
+            for menu in object["menuData"]["menus"]:
+                if specific_date in menu["date"]:
+                    data = menu["data"]
+                    for item in data:
+                        restaurant_menu.append(item["name"])
+            break
+
+    return restaurant_menu
+
+
 def unicafe_global_sausagesearch():
     viikkiRestaurants = [
         "Tähkä",
@@ -176,14 +190,27 @@ class UnicafeGlobalSausageSearch(Resource):
     def get(self):
         return unicafe_global_sausagesearch()
 
+
 class UnicafeChemicum(Resource):
     def get(self):
         return get_todays_menu("Chemicum")
+
 
 class UnicafeExactum(Resource):
     def get(self):
         return get_todays_menu("Exactum")
 
+
+class UnicafeDatesearch(Resource):
+    def get(self, restaurant_name, date):
+        # convert input format 2024-10-15 to 15.10.
+        date = datetime.strptime(date, "%Y-%m-%d").strftime("%d.%m.")
+        return get_menu_for_date(restaurant_name, date)
+
+
 api.add_resource(UnicafeGlobalSausageSearch, "/api")
 api.add_resource(UnicafeChemicum, "/api/chemicum")
 api.add_resource(UnicafeExactum, "/api/exactum")
+api.add_resource(
+    UnicafeDatesearch, "/api/datesearch/<string:restaurant_name>/<string:date>"
+)
