@@ -1,13 +1,13 @@
 from flask import Flask
 from flask import render_template
 from flask_restful import Resource, Api
+from flask_cors import CORS
 
 from datetime import datetime
 
 # import request
 import requests
 
-import json
 
 api_url = "https://unicafe.fi/wp-json/swiss/v1/restaurants/?lang=fi"
 
@@ -16,6 +16,7 @@ response = requests.get(api_url)
 
 app = Flask(__name__)
 api = Api(app)
+CORS(app)
 
 # get todays date in format 07.05
 date = datetime.now().strftime("%d.%m")
