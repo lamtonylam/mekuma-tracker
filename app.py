@@ -62,7 +62,10 @@ def check_if_sausage_is_in_week(restaurant_name):
     # dates that have sausage
     dates_that_have_sausage = []
     for day in menu_stripped_from_pastdates:
-        if "meksikolainen uunimakkara" in menu_stripped_from_pastdates[day]:
+        if (
+            "meksikolainen uunimakkara" in menu_stripped_from_pastdates[day]
+            or "meksikolaista uunimakkaraa" in menu_stripped_from_pastdates[day]
+        ):
             dates_that_have_sausage.append(day)
 
     return dates_that_have_sausage
